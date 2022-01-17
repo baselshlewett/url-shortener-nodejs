@@ -2,10 +2,10 @@ import { ObjectId } from "mongoose";
 
 export default interface Url {
     id: any;
-    urlCode: String,
-    longUrl: String,
-    shortUrl: String,
+    urlCode: string,
+    longUrl: string,
+    shortUrl: string,
     visits: number,
-    date: String,
+    date: string,
     _id?: ObjectId
 }

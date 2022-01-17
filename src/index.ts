@@ -1,12 +1,12 @@
 import App from './app';
 import UrlController from './urls/urls.controller';
 import { connectToDatabase } from './services/database.service';
-import redirectController from './redirect/redirect.controller';
+import RedirectController from './redirect/redirect.controller';
 
 connectToDatabase().then(() => {
     const app = new App(
         [
-            new redirectController(),
+            new RedirectController(),
             new UrlController()
         ],
         3000
@@ -14,7 +14,6 @@ connectToDatabase().then(() => {
 
     app.listen();
 }).catch(() => {
-    console.log('DB CONNECTION FAILED');
     process.exit();
 })
 

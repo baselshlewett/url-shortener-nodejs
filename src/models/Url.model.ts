@@ -14,4 +14,4 @@ const URLSchema = new Schema({
 
 const UrlModel: Model<Url> = model('Url', URLSchema);
 
-export default UrlModel; 
+export default UrlModel;

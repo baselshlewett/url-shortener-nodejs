@@ -3,7 +3,7 @@ import Url from '../urls/url.interface';
 
 import UrlModel from '../models/Url.model';
 
-export default class redirectController {
+export default class RedirectController {
     public path = '/:urlCode';
     public router = express.Router();
 
@@ -36,7 +36,9 @@ export default class redirectController {
 
             response.status(301).redirect(String(url.longUrl));
         } catch (err) {
-
+            response.status(500).send({
+                message: "Server Error"
+            });
         }
     }
 

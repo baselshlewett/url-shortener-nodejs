@@ -25,8 +25,8 @@ export default class UrlController {
     private initRoutes() {
         this.router.get(this.path, this.getAllUrls.bind(this));
         this.router.post(this.path, this.createUrl.bind(this));
-        this.router.put(this.path  + "/:urlCode", this.updateUrl.bind(this));
-        this.router.delete(this.path + "/:urlCode", this.deleteUrl.bind(this));
+        this.router.put(this.path  + "/:urlId", this.updateUrl.bind(this));
+        this.router.delete(this.path + "/:urlId", this.deleteUrl.bind(this));
     }
 
     public async getAllUrls(request: express.Request, response: express.Response): Promise<void> {
@@ -34,14 +34,12 @@ export default class UrlController {
             this.urls = await UrlModel.find();
             response.json(this.urls);
           } catch (err) {
-              // log error to console
-            console.error(err.message);
             response.status(500).send("Server Error");
           }
     }
 
     public async createUrl(request: express.Request, response: express.Response): Promise<void> {
-        //destruct url from request body
+        // destruct url from request body
         const { longUrl } = request.body;
 
         // generate random chars of length 5
@@ -62,17 +60,16 @@ export default class UrlController {
 
             response.send(urlModel);
         } catch (err) {
-            console.error(err.message);
             response.status(500).send("Server Error");
         }
     }
 
     public async updateUrl(request: express.Request, response: express.Response): Promise<void> {
-        const { urlCode } = request.params;
+        const { urlId } = request.params;
         const { longUrl } = request.body;
 
         try {
-            const url = await UrlModel.findOneAndUpdate({ urlCode }, { longUrl }, { new: true });
+            const url = await UrlModel.findByIdAndUpdate(urlId, { longUrl }, { new: true });
 
             if (!url) {
                 response.status(404).send({
@@ -90,10 +87,10 @@ export default class UrlController {
     }
 
     public async deleteUrl(request: express.Request, response: express.Response): Promise<void> {
-        const { urlCode } = request.params;
+        const { urlId } = request.params;
 
         try {
-            const url = await UrlModel.findOneAndDelete({urlCode});
+            const url = await UrlModel.findByIdAndDelete(urlId);
 
             if (!url) {
                 response.status(404).send({
